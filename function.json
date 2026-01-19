@@ -1,0 +1,105 @@
+{
+  "type": "scalar.function",
+  "description": "Keyword-based Relevance Scoring. Discover how relevant a piece of content is to specific keywords. Splits each keyword into a separate Vector Completion Task.",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "keywords": {
+        "type": "array",
+        "description": "Keywords to evaluate relevance against.",
+        "minItems": 1,
+        "items": {
+          "type": "string",
+          "description": "A keyword to evaluate relevance against."
+        }
+      },
+      "content": {
+        "anyOf": [
+          {
+            "type": "string",
+            "description": "Text content to be evaluated for relevance."
+          },
+          {
+            "type": "image",
+            "description": "Image content to be evaluated for relevance."
+          },
+          {
+            "type": "video",
+            "description": "Video content to be evaluated for relevance."
+          },
+          {
+            "type": "audio",
+            "description": "Audio content to be evaluated for relevance."
+          },
+          {
+            "type": "file",
+            "description": "File content to be evaluated for relevance."
+          },
+          {
+            "type": "array",
+            "description": "Array of content pieces to be evaluated for relevance.",
+            "minItems": 1,
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "description": "Text content to be evaluated for relevance."
+                },
+                {
+                  "type": "image",
+                  "description": "Image content to be evaluated for relevance."
+                },
+                {
+                  "type": "video",
+                  "description": "Video content to be evaluated for relevance."
+                },
+                {
+                  "type": "audio",
+                  "description": "Audio content to be evaluated for relevance."
+                },
+                {
+                  "type": "file",
+                  "description": "File content to be evaluated for relevance."
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "required": ["keywords", "content"]
+  },
+  "input_maps": {
+    "$jmespath": "to_array(input.keywords)"
+  },
+  "tasks": [
+    {
+      "type": "vector.completion",
+      "map": 0,
+      "messages": [
+        {
+          "role": "user",
+          "content": [
+            {
+              "type": "text",
+              "text": {
+                "$jmespath": "join('',['How relevant is the following content with regards to \"',map,'\":\n\n\"'])"
+              }
+            },
+            {
+              "$jmespath": "input_value_switch(input.content,`null`,&[].input_value_switch(input.content,`null`,`null`,&{type:'text',text:@},`null`,`null`,`null`,input.content,input.content,input.content,input.content),&{type:'text',text:@},`null`,`null`,`null`,input.content,input.content,input.content,input.content)"
+            },
+            {
+              "type": "text",
+              "text": "\""
+            }
+          ]
+        }
+      ],
+      "responses": ["Extremely Relevant", "Somewhat Relevant", "Not Relevant"]
+    }
+  ],
+  "output": {
+    "$jmespath": "avg(tasks[0][].add(scores[0],multiply(scores[1],`0.5`)))"
+  }
+}
