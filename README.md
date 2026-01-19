@@ -1,6 +1,8 @@
 # keyword-relevance-split
 
-Keyword-based relevance scoring that evaluates each keyword independently.
+An [ObjectiveAI](https://objective-ai.io) Function for keyword-based relevance scoring that evaluates each keyword independently.
+
+> **ObjectiveAI** is a platform for scoring, ranking, and simulating preferences using ensembles of LLMs. Learn more at [objective-ai.io](https://objective-ai.io) or see the [GitHub repository](https://github.com/ObjectiveAI/objectiveai).
 
 ## Overview
 
