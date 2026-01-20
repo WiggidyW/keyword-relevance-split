@@ -101,8 +101,5 @@
   ],
   "output": {
     "$jmespath": "avg(tasks[0][].add(scores[0],multiply(scores[1],`0.5`)))"
-  },
-  "output_length": {
-    "$jmespath": "length(input.contentItems)"
   }
 }
