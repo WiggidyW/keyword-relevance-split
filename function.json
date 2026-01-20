@@ -87,7 +87,7 @@
               }
             },
             {
-              "$jmespath": "input_value_switch(input.content,`null`,&[].input_value_switch(input.content,`null`,`null`,&{type:'text',text:@},`null`,`null`,`null`,input.content,input.content,input.content,input.content),&{type:'text',text:@},`null`,`null`,`null`,input.content,input.content,input.content,input.content)"
+              "$jmespath": "input_value_switch(input.content,`null`,&[].input_value_switch(@,`null`,`null`,&{type:'text',text:@},`null`,`null`,`null`,@,@,@,@),&{type:'text',text:@},`null`,`null`,`null`,input.content,input.content,input.content,input.content)"
             },
             {
               "type": "text",
