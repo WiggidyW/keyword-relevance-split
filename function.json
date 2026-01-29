@@ -67,7 +67,10 @@
         ]
       }
     },
-    "required": ["keywords", "content"]
+    "required": [
+      "keywords",
+      "content"
+    ]
   },
   "input_maps": {
     "$jmespath": "to_array(input.keywords)"
@@ -96,7 +99,11 @@
           ]
         }
       ],
-      "responses": ["Extremely Relevant", "Somewhat Relevant", "Not Relevant"]
+      "responses": [
+        "Extremely Relevant",
+        "Somewhat Relevant",
+        "Not Relevant"
+      ]
     }
   ],
   "output": {
